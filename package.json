@@ -1,0 +1,24 @@
+{
+  "name": "dmp-app-websocket",
+  "version": "1.0.0",
+  "description": "",
+  "main": "config.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "directory-tree": "^2.0.0",
+    "express": "^4.16.2",
+    "jsonfile": "^4.0.0",
+    "lodash.assignin": "^4.2.0",
+    "mkdirp": "^0.5.1",
+    "moment": "^2.20.1",
+    "music-tempo": "^1.0.3",
+    "socket.io": "^2.0.4",
+    "uuid": "^3.2.1",
+    "web-audio-api": "^0.2.2",
+    "xlsx": "^0.11.17"
+  }
+}
