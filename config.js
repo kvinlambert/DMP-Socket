@@ -17,13 +17,13 @@ exports.nodeConfig = {
  * Location of the music folder
  * @type {String}
  */
-exports.musicDir = path.join(os.homedir(), 'Documents', 'DMP', 'Music');
+exports.musicDir = path.join(__dirname, '..', 'music');
 
 /**
  * Location of the timing file
  * @type {String}
  */
-exports.timingPath = path.join(os.homedir(), 'Documents', 'DMP', 'timing.xlsx');
+exports.timingPath = path.join(__dirname, '..', 'timing.xlsx');
 
 /**
  * Associative object of column order

@@ -9,12 +9,10 @@ module.exports = {
 
   createInitialFolder() {
     try {
-      if (!fs.statSync(path.join(musicDir))) {
-        mkdirp.sync(path.join(musicDir));
-      }
+      mkdirp.sync(musicDir);
       return {
         code: 200,
-        text: path.join(musicDir)
+        text: musicDir
       };
     } catch (err) {
       return {

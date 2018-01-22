@@ -10,6 +10,10 @@ const fileManager    = require('./managers/fileManager');
 const musicManager   = require('./managers/musicManager');
 const { musicTypes, musicDir } = require('./config');
 
+app.get('/', (req, res) => {
+  res.send('Hello World!');
+});
+
 io.on('connection', (socket) => {
   console.log('user is connected');
 
