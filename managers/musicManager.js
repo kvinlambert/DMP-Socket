@@ -53,7 +53,9 @@ module.exports = {
           .replace(/(\[(clashes).*\])/g, '')
           // removes 1 or 2 digits at the begining (if there are there)
           // to avoid detecting tracklist number
-          .replace(/^[1-9]{1,2}\s*-*/g, '');
+          .replace(/^[0-9]{1,2}/g, '')
+          // removes potential name "track 31" or else to avoid wrong bpm detection
+          .replace(/(track\s*[0-9]*)/g, '');
       const { titles, bpms } = musicTypes[roundType][type];
       const titleMatch = titles.some(title => nameModifier(name).toLowerCase().includes(title));
       const bpmMatch = bpms.some(bpm => nameModifier(name).toLowerCase().includes(bpm));
