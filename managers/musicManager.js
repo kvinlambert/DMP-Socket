@@ -1,7 +1,7 @@
 const fs               = require('fs');
 const uuidv4           = require('uuid/v4');
 const MusicTempo       = require('music-tempo');
-const assignIn         = require('lodash.assignin')
+const assignIn         = require('lodash.assignin');
 const { AudioContext } = require('web-audio-api');
 const childProcess     = require('child_process');
 const { musicTypes }   = require('../config');
@@ -47,7 +47,13 @@ module.exports = {
     };
 
     musicTypesEntries.forEach((type) => {
-      const nameModifier = songName => songName.toLowerCase().replace(/(\[(clashes).*\])/g, '');
+      const nameModifier = songName =>
+        songName.toLowerCase()
+          // removes [clashes ...] to avoid detecting clash timing in pasodoble
+          .replace(/(\[(clashes).*\])/g, '')
+          // removes 1 or 2 digits at the begining (if there are there)
+          // to avoid detecting tracklist number
+          .replace(/^[1-9]{1,2}\s*-*/g, '');
       const { titles, bpms } = musicTypes[roundType][type];
       const titleMatch = titles.some(title => nameModifier(name).toLowerCase().includes(title));
       const bpmMatch = bpms.some(bpm => nameModifier(name).toLowerCase().includes(bpm));
