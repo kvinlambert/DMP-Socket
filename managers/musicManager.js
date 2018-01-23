@@ -47,9 +47,10 @@ module.exports = {
     };
 
     musicTypesEntries.forEach((type) => {
+      const nameModifier = songName => songName.toLowerCase().replace(/(\[(clashes).*\])/g, '');
       const { titles, bpms } = musicTypes[roundType][type];
-      const titleMatch = titles.some(title => name.toLowerCase().includes(title));
-      const bpmMatch = bpms.some(bpm => name.toLowerCase().includes(bpm));
+      const titleMatch = titles.some(title => nameModifier(name).toLowerCase().includes(title));
+      const bpmMatch = bpms.some(bpm => nameModifier(name).toLowerCase().includes(bpm));
 
       // If the song name contains an indicator either with the type name or bpm
       if (titleMatch || bpmMatch) {
