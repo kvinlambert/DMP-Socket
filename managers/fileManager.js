@@ -130,6 +130,9 @@ module.exports = {
       };
     });
 
+    // make sure every files are readable from a browser
+    childProcess.exec(`find ${musicDir} -type f -print0 | xargs -0 chmod 0644`);
+
     return songsArrayPromise
       .then(songsArray => songsArray.map((songs, index) => ({
         ...roundsArray[index],
