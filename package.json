@@ -1,6 +1,6 @@
 {
   "name": "dmp-app-websocket",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "",
   "main": "config.js",
   "scripts": {
@@ -11,6 +11,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "bluebird": "^3.5.1",
     "directory-tree": "^2.0.0",
     "express": "^4.16.2",
     "jsonfile": "^4.0.0",
