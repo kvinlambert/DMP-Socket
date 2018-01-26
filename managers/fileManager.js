@@ -2,6 +2,8 @@ const fs                       = require('fs');
 const path                     = require('path');
 const mkdirp                   = require('mkdirp');
 const dirTree                  = require('directory-tree');
+const BbPromise                = require('bluebird');
+const os                       = require('os');
 const musicManager             = require('./musicManager');
 const { musicTypes, musicDir } = require('../config');
 
@@ -62,11 +64,15 @@ module.exports = {
     const roundMetas = this.getRoundMetas(subdirPath);
     const tree = this.getTree(subdirPath);
     const { children } = tree;
+    // BlueBird Promise used for concurrency feature
+    const songPromises = BbPromise.map(children, song =>
+      musicManager.getSongType(roundMetas.type, song, event), {
+      concurrency: 2
+    });
 
     socket.progress.totalSongs = this.getTotalSongs();
 
-    return Promise.all(children.map(song =>
-      musicManager.getSongType(roundMetas.type, song, socket)))
+    return songPromises
       .then((result) => {
         const unknownSongTypes = result.filter(songInfos => songInfos.meta[0].type === 'unknown');
 
@@ -97,9 +103,11 @@ module.exports = {
     const tree = this.getTree(_path);
     const { children } = tree;
     const dancesOrder = {};
-
-    const songsArrayPromise = Promise.all(tree.children.map(child =>
-      this.getArrayOfSongTypes(child.path, socket)));
+    // BlueBird Promise used for concurrency feature
+    const songsArrayPromise = BbPromise.map(tree.children, child =>
+      this.getArrayOfSongTypes(child.path, event), {
+      concurrency: os.cpus().length
+    });
 
     const roundsArray = children.map((subdir, index) => {
       const roundMetas = this.getRoundMetas(subdir.path);
@@ -122,10 +130,12 @@ module.exports = {
       };
     });
 
-    return songsArrayPromise.then(songsArray => songsArray.map((songs, index) => ({
-      ...roundsArray[index],
-      dances: songs.sort((a, b) => dancesOrder[a.meta[0].type] - dancesOrder[b.meta[0].type])
-    }))).catch(err => console.error(err));
+    return songsArrayPromise
+      .then(songsArray => songsArray.map((songs, index) => ({
+        ...roundsArray[index],
+        dances: songs.sort((a, b) => dancesOrder[a.meta[0].type] - dancesOrder[b.meta[0].type])
+      })))
+      .catch(err => console.error(err));
   },
 
 
