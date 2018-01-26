@@ -67,7 +67,7 @@ module.exports = {
     const { children } = tree;
     // BlueBird Promise used for concurrency feature
     const songPromises = BbPromise.map(children, song =>
-      musicManager.getSongType(roundMetas.type, song, event), {
+      musicManager.getSongType(roundMetas.type, song, socket), {
       concurrency: 2
     });
 
