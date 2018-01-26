@@ -4,6 +4,7 @@ const mkdirp                   = require('mkdirp');
 const dirTree                  = require('directory-tree');
 const BbPromise                = require('bluebird');
 const os                       = require('os');
+const childProcess             = require('child_process');
 const musicManager             = require('./musicManager');
 const { musicTypes, musicDir } = require('../config');
 
